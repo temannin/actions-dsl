@@ -3,7 +3,7 @@ import { JobStep } from "./JobStep.ts";
 
 interface Job {
   id: string;
-  runsOn: RunnerTypes;
+  runsOn?: RunnerTypes;
   steps: JobStep[];
 }
 
@@ -21,5 +21,9 @@ export class Workflow {
   public addJob(id: string, runsOn: RunnerTypes, steps: JobStep[]): this {
     this.jobs.push({ id, runsOn, steps });
     return this;
+  }
+
+  public checkout() {
+    this.jobs.push({});
   }
 }
