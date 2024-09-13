@@ -1,7 +1,10 @@
-export interface Job {
+import { RunnerTypes } from "./RunnerTypes.ts";
+import { JobStep } from "./JobStep.ts";
+
+interface Job {
   id: string;
   runsOn: RunnerTypes;
-  steps: Array<{ name: string; uses?: string; run?: string }>;
+  steps: JobStep[];
 }
 
 export class Workflow {
@@ -15,7 +18,7 @@ export class Workflow {
   }
 
   // Method to add a job to the workflow
-  public addJob(id: string, runsOn: RunnerTypes, steps: Array<{ name: string; uses?: string; run?: string }>): this {
+  public addJob(id: string, runsOn: RunnerTypes, steps: JobStep[]): this {
     this.jobs.push({ id, runsOn, steps });
     return this;
   }
