@@ -26,30 +26,46 @@ enhance the creation, management, and configuration of GitHub Actions workflows.
 1. **Create Your DSL Script**: Write your GitHub Actions workflow in a `.dsl.ts`
    file. For example:
    ```typescript
-   import {
-     Checkout,
-     Run,
-     RunnerTypes,
-     SetupNode,
-     Workflow,
-   } from "https://raw.githubusercontent.com/temannin/actions-dsl/main/mod.ts";
+   import { Run, Triggers, Workflow } from "../mod.ts";
 
-   let yaml = new Workflow("Lint Workflow", RunnerTypes.UBUNTU_LATEST)
-     .addJob("lint", (s) => {
-       s.addStep(Checkout()); // standard git checkout
-       s.addStep(SetupNode()); // setup node
-       s.addStep(Run("npm i")); // install deps
-       s.addStep(Run("npm run lint")); // run lint
-     }).compile();
+   const workflow = new Workflow("Hello World")
+     .on(
+       Triggers.Push({ branches: ["demo/**"] }),
+     )
+     .addJob({
+       name: "hello-world",
+       configureSteps: (s) => {
+         s.addStep(Run('echo "Hello, World!"'));
+       },
+     });
+
+   /**
+     * name: Hello World
+
+    on:
+      push:
+        branches:
+          - demo/**
+
+    jobs:
+      hello-world:
+        runs-on: ubuntu-latest
+        steps:
+          - run: echo "Hello, World!"
+    */
    ```
 
+Deno.writeTextFile( "./.github/workflows/hello_world.yml", workflow.compile(),
+);
+
+```
 2. That's it! Because of the greatness of Deno, there's no `npm i`. Bring in
-   what you want.
+what you want.
 
 ## Usage
 
 - **Define Workflows**: Use the provided functions to define and configure your
-  GitHub Actions workflows in TypeScript.
+GitHub Actions workflows in TypeScript.
 
 ## Contributing
 
@@ -59,7 +75,7 @@ contribute:
 1. **Fork the Repository**.
 2. **Create a New Branch** for your feature or fix.
 3. **Make Your Changes** and ensure that the code adheres to our coding
-   standards.
+standards.
 4. **Submit a Pull Request** with a clear description of your changes.
 
 ## Documentation
@@ -75,3 +91,13 @@ For detailed documentation on how to use and extend the DSL, check the
 
 For questions or support, please open an issue on the
 [GitHub repository](https://github.com/yourusername/actions-dsl/issues).
+```
+
+```
+```
+
+```
+```
+
+```
+```

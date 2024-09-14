@@ -1,43 +1,30 @@
-import {
-  Checkout,
-  JobConfiguration,
-  Run,
-  SetupDeno,
-  Triggers,
-  Workflow,
-} from "../mod.ts";
+import { Run, Triggers, Workflow } from "../mod.ts";
 
-const lintJob: JobConfiguration = {
-  name: "lint",
-  configureSteps: (s) => {
-    s.addStep(Checkout()); // standard git checkout
-    s.addStep(SetupDeno({ "deno-version": "v1.x" })); // setup deno
-    s.addStep(Run("deno lint")); // run lint
-  },
-  styledName: "Check Linting",
-};
-
-const formatJob: JobConfiguration = {
-  name: "format",
-  configureSteps: (s) => {
-    s.addStep(Checkout());
-    s.addStep(SetupDeno());
-    s.addStep(Run("deno fmt --check"));
-  },
-  styledName: "Check Formatting",
-};
-
-const yaml = new Workflow("Check Linting and Formatting")
-  .on([
-    Triggers.PullRequest({
-      types: ["synchronize", "opened"],
-      paths: ['"**.ts"'],
-    }),
-  ])
-  .on([Triggers.Push({ branches: ["main", "master"], paths: ['"**.ts"'] })])
-  .addJobs([lintJob, formatJob]);
+const workflow = new Workflow("Hello World")
+  .on(Triggers.Push({ branches: ["demo/**"] }))
+  .addJob({
+    name: "hello-world",
+    configureSteps: (s) => {
+      s.addStep(Run('echo "Hello, World!"'));
+    },
+  });
 
 Deno.writeTextFile(
-  "./.github/workflows/lint.yml",
-  yaml.compile(),
+  "./.github/workflows/hello_world.yml",
+  workflow.compile(),
 );
+
+/**
+ * name: Hello World
+
+on:
+  push:
+    branches:
+      - demo/**
+
+jobs:
+  hello-world:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "Hello, World!"
+ */
