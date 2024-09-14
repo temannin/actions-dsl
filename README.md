@@ -23,10 +23,14 @@ enhance the creation, management, and configuration of GitHub Actions workflows.
 
 ### Getting Started
 
-1. **Create Your DSL Script**: Write your GitHub Actions workflow in a `.dsl.ts`
+1. **Create Your DSL Script**: Write your GitHub Actions workflow in a `.ts`
    file. For example:
    ```typescript
-   import { Run, Triggers, Workflow } from "../mod.ts";
+   import {
+     Run,
+     Triggers,
+     Workflow,
+   } from "https://raw.githubusercontent.com/temannin/actions-dsl/main/mod.ts";
 
    const workflow = new Workflow("Hello World")
      .on(
@@ -39,6 +43,12 @@ enhance the creation, management, and configuration of GitHub Actions workflows.
        },
      });
 
+   Deno.writeTextFile(
+     "./.github/workflows/hello_world.yml",
+     workflow.compile(),
+   );
+
+   // Produces the .yml file below!
    /**
      * name: Hello World
 
@@ -55,17 +65,13 @@ enhance the creation, management, and configuration of GitHub Actions workflows.
     */
    ```
 
-Deno.writeTextFile( "./.github/workflows/hello_world.yml", workflow.compile(),
-);
-
-```
 2. That's it! Because of the greatness of Deno, there's no `npm i`. Bring in
-what you want.
+   what you want.
 
 ## Usage
 
 - **Define Workflows**: Use the provided functions to define and configure your
-GitHub Actions workflows in TypeScript.
+  GitHub Actions workflows in TypeScript.
 
 ## Contributing
 
@@ -75,13 +81,8 @@ contribute:
 1. **Fork the Repository**.
 2. **Create a New Branch** for your feature or fix.
 3. **Make Your Changes** and ensure that the code adheres to our coding
-standards.
+   standards.
 4. **Submit a Pull Request** with a clear description of your changes.
-
-## Documentation
-
-For detailed documentation on how to use and extend the DSL, check the
-[docs](https://github.com/yourusername/actions-dsl/docs).
 
 ## License
 
@@ -90,14 +91,4 @@ For detailed documentation on how to use and extend the DSL, check the
 ## Contact
 
 For questions or support, please open an issue on the
-[GitHub repository](https://github.com/yourusername/actions-dsl/issues).
-```
-
-```
-```
-
-```
-```
-
-```
-```
+[GitHub repository](https://github.com/temannin/actions-dsl/issues).
