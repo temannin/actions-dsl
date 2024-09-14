@@ -1,6 +1,6 @@
 {
   "tasks": {
-    "dev": "deno run -A --watch ./test/hello.ts"
+    "dev": "deno run -A --watch ./examples/hello.ts"
   },
   "fmt": {
     "indentWidth": 2,
