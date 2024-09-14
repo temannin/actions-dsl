@@ -2,66 +2,88 @@ import { Workflow } from "../mod.ts";
 import { JobStep } from "../Workflow.ts";
 
 export class Writer {
-    private output = "";
-    private workflow: Workflow;
-    public indentLevel = 0;
+  private output = "";
+  private workflow: Workflow;
+  public indentLevel = 0;
 
-    constructor(workflow: Workflow) {
-        this.workflow = workflow;
-        this.append(`name: ${this.workflow.name}`);
-        this.append(`jobs:`);
+  constructor(workflow: Workflow) {
+    this.workflow = workflow;
+  }
 
-        this.writeJobs();
-    }
+  private indent = () => {
+    return "  ".repeat(this.indentLevel);
+  };
 
-    private indent = () => {
-        return "  ".repeat(this.indentLevel);
-    };
+  public append(str: string) {
+    this.output = this.output + `${this.indent()}${str}\n`;
+  }
 
-    public append(str: string) {
-        this.output = this.output + `${this.indent()}${str}\n`;
-    }
+  public getYaml() {
+    this.append(`name: ${this.workflow.name}`);
+    this.writeTriggers();
+    this.append(`jobs:`);
+    this.writeJobs();
+    return this.output;
+  }
 
-    public getYaml() {
-        return this.output;
-    }
+  public incrementIndent() {
+    this.indentLevel++;
+  }
 
-    public incrementIndent() {
-        this.indentLevel++;
-    }
+  public decrementIndent() {
+    this.indentLevel--;
+  }
 
-    public decrementIndent() {
-        this.indentLevel--;
-    }
+  private writeJobs() {
+    for (let index = 0; index < this.workflow.jobs.length; index++) {
+      this.indentLevel = 1;
+      const job = this.workflow.jobs[index];
+      this.append(`${job.name}:`);
+      this.incrementIndent();
+      this.append(`runs-on: ${job.runsOn}`);
 
-    private writeJobs() {
-        for (let index = 0; index < this.workflow.jobs.length; index++) {
-            this.indentLevel = 1;
-            const job = this.workflow.jobs[index];
-            this.append(`${job.name}:`);
+      if (job.styledName) {
+        this.append(`name: ${job.styledName}`);
+      }
+
+      this.append("steps:");
+      this.incrementIndent();
+
+      job.getReadOnlySteps().forEach((element: JobStep) => {
+        if (!element.name) {
+          this.append(`- run: ${element.run}`);
+        } else {
+          this.append(`- name: ${element.name}`);
+          this.incrementIndent();
+          this.append(`uses: ${element.uses}`);
+          if (element.with !== undefined) {
+            this.append(`with: `);
             this.incrementIndent();
-            this.append("steps:");
-            this.incrementIndent();
 
-            job.getReadOnlySteps().forEach((element: JobStep) => {
-                if (!element.name) {
-                    this.append(`- run: ${element.run}`);
-                } else {
-                    this.append(`- name: ${element.name}`);
-                    this.incrementIndent();
-                    this.append(`uses: ${element.uses}`);
-                    if (element.with !== undefined) {
-                        this.append(`with: `);
-                        this.incrementIndent();
-
-                        Object.keys(element.with).forEach((key) => {
-                            this.append(`${key}: ${element.with![key]}`);
-                        });
-                        this.decrementIndent();
-                    }
-                    this.decrementIndent();
-                }
+            Object.keys(element.with).forEach((key) => {
+              this.append(`${key}: ${element.with![key]}`);
             });
+            this.decrementIndent();
+          }
+          this.decrementIndent();
         }
+      });
     }
+  }
+
+  private writeTriggers() {
+    this.append("");
+    this.indentLevel = 0;
+    this.append("on: ");
+
+    this.workflow.triggers.forEach((trigger) => {
+      this.indentLevel = 0;
+      this.incrementIndent();
+      trigger.build(this);
+      this.decrementIndent();
+    });
+
+    this.indentLevel = 0;
+    this.append("");
+  }
 }

@@ -2,13 +2,27 @@ import { RunnerTypes } from "./RunnerTypes.ts";
 import { ITrigger } from "./triggers/ITrigger.ts";
 import { Writer } from "./utils/Writer.ts";
 
+export interface JobConfiguration {
+  name: string;
+  configureSteps: (steps: JobStepCollection) => void;
+  styledName?: string;
+}
+
 export class JobStepCollection {
   public name: string;
-  private matrix?: Record<string, any[]>;
+  public styledName?: string;
+  private matrix?: Record<string, string[]>;
   private steps: JobStep[] = [];
+  public runsOn: RunnerTypes;
 
-  constructor(name: string) {
+  constructor(
+    name: string,
+    runsOn: RunnerTypes = RunnerTypes.UBUNTU_LATEST,
+    styledName?: string,
+  ) {
     this.name = name;
+    this.styledName = styledName;
+    this.runsOn = runsOn;
   }
 
   public addStep(step: JobStep | JobStep[]): this {
@@ -31,12 +45,13 @@ export class JobStep {
   public name?: string;
   public uses?: string;
   public run?: string;
-  public with?: Record<string, any>;
+  public with?: Record<string, string>;
 
   constructor(
     name?: string,
     uses?: string,
     run?: string,
+    // deno-lint-ignore no-explicit-any
     withParams?: Record<string, any>,
   ) {
     this.name = name;
@@ -48,19 +63,17 @@ export class JobStep {
 
 export class Workflow {
   public name: string;
-  public runnerType: RunnerTypes;
 
   public jobs: JobStepCollection[] = [];
   public triggers: ITrigger[] = [];
 
-  constructor(name: string, runnerType: RunnerTypes) {
+  constructor(name: string) {
     this.name = name;
-    this.runnerType = runnerType;
   }
 
   public on(trigger: ITrigger | ITrigger[]): this {
     if (Array.isArray(trigger)) {
-      this.triggers.concat(trigger);
+      this.triggers = this.triggers.concat(trigger);
     } else {
       this.triggers.push(trigger);
     }
@@ -68,19 +81,23 @@ export class Workflow {
     return this;
   }
 
-  public addJob(
-    name: string,
-    configureSteps: (steps: JobStepCollection) => void,
-  ): this {
-    const collection = new JobStepCollection(name);
+  public addJob({ name, configureSteps, styledName }: JobConfiguration): this {
+    const collection = new JobStepCollection(name, undefined, styledName);
     this.jobs.push(collection);
     configureSteps(collection);
     return this;
   }
 
+  public addJobs(configs: JobConfiguration[]): this {
+    configs.forEach((config) => {
+      this.addJob(config);
+    });
+    return this;
+  }
+
   public addMatrixJob(
     name: string,
-    matrix: Record<string, any[]>,
+    _matrix: Record<string, string[]>,
     configureSteps: (steps: JobStepCollection) => void,
   ): this {
     const collection = new JobStepCollection(name);

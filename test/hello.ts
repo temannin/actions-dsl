@@ -1,17 +1,43 @@
 import {
-    Checkout,
-    Run,
-    RunnerTypes,
-    SetupNode,
-    Workflow,
-} from "https://raw.githubusercontent.com/temannin/actions-dsl/main/mod.ts";
+  Checkout,
+  JobConfiguration,
+  Run,
+  SetupDeno,
+  Triggers,
+  Workflow,
+} from "../mod.ts";
 
-let yaml = new Workflow("Lint Workflow", RunnerTypes.UBUNTU_LATEST)
-    .addJob("lint", (s) => {
-        s.addStep(Checkout()); // standard git checkout
-        s.addStep(SetupNode()); // setup node
-        s.addStep(Run("npm i")); // install deps
-        s.addStep(Run("npm run lint")); // run lint
-    }).compile();
+const lintJob: JobConfiguration = {
+  name: "lint",
+  configureSteps: (s) => {
+    s.addStep(Checkout()); // standard git checkout
+    s.addStep(SetupDeno({ "deno-version": "v1.x" })); // setup deno
+    s.addStep(Run("deno lint")); // run lint
+  },
+  styledName: "Check Linting",
+};
 
-console.log(yaml);
+const formatJob: JobConfiguration = {
+  name: "format",
+  configureSteps: (s) => {
+    s.addStep(Checkout());
+    s.addStep(SetupDeno());
+    s.addStep(Run("deno fmt --check"));
+  },
+  styledName: "Check Formatting",
+};
+
+const yaml = new Workflow("Check Linting and Formatting")
+  .on([
+    Triggers.PullRequest({
+      types: ["synchronize", "opened"],
+      paths: ['"**.ts"'],
+    }),
+  ])
+  .on([Triggers.Push({ branches: ["main", "master"], paths: ['"**.ts"'] })])
+  .addJobs([lintJob, formatJob]);
+
+Deno.writeTextFile(
+  "./.github/workflows/lint.yml",
+  yaml.compile(),
+);

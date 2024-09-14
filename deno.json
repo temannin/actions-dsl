@@ -1,8 +1,9 @@
 {
   "tasks": {
-    "dev": "deno run --watch ./test/hello.ts"
+    "dev": "deno run -A --watch ./test/hello.ts"
   },
-  "imports": {
-    "@std/assert": "jsr:@std/assert@1"
+  "fmt": {
+    "indentWidth": 2,
+    "useTabs": false
   }
 }
