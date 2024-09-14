@@ -1,0 +1,21 @@
+{
+  "version": "3",
+  "remote": {
+    "https://raw.githubusercontent.com/temannin/actions-dsl/main/RunnerTypes.ts": "e8a35dd5973efd584a93d0e2ef2f9ad2a57590a98551b98600d0554c046ace7a",
+    "https://raw.githubusercontent.com/temannin/actions-dsl/main/Workflow.ts": "acee57dd95aed727a82115bc2125f195ff81795ffcfa4e6e356acd021102e507",
+    "https://raw.githubusercontent.com/temannin/actions-dsl/main/actions/github/checkout.ts": "5a11421a82f10253b7fcaf3dd09f0f5d5b44e089400c7f075a5eeee9687f9923",
+    "https://raw.githubusercontent.com/temannin/actions-dsl/main/actions/github/mod.ts": "5aa58807ae4f32c699451d02b659f6d99041cb2477fd569aec9fca694540884c",
+    "https://raw.githubusercontent.com/temannin/actions-dsl/main/actions/github/setup-node.ts": "5c7eb4a41a1234b8cdc92ecdbd92ee65e45a03db599406007fe99d3a5ed8ac26",
+    "https://raw.githubusercontent.com/temannin/actions-dsl/main/actions/mod.ts": "3815b93ade9e0b951392263767734817268d19d1bbd1aae63cdc169231516506",
+    "https://raw.githubusercontent.com/temannin/actions-dsl/main/github/mod.ts": "6d7a775a9b9d57e4a1b0a94679aade6733cfadbebfbaa99d15bc050c3d05ed1b",
+    "https://raw.githubusercontent.com/temannin/actions-dsl/main/github/variables.ts": "6518d348eabde540efd7cb088881366f9fc07ea35481bf8622015439bdcdf3a3",
+    "https://raw.githubusercontent.com/temannin/actions-dsl/main/mod.ts": "597a15e180fdefa88efd3012be1d5ad42676de0e6232bb5df49e168248c3eda9",
+    "https://raw.githubusercontent.com/temannin/actions-dsl/main/triggers/ITrigger.ts": "f27eeccf27c62871d7bbb12a1d18dbdc0f8258de039aac2bc6d937b17004e66e",
+    "https://raw.githubusercontent.com/temannin/actions-dsl/main/utils/Writer.ts": "e7ad8182b2907ce01983bde4375ca4aef77faa26bddbecdc16c0d08b86ce13a4"
+  },
+  "workspace": {
+    "dependencies": [
+      "jsr:@std/assert@1"
+    ]
+  }
+}
