@@ -13,7 +13,7 @@ const workflow = new Workflow("Create Release")
                     -H "Authorization: Bearer ${GITHUB_VARIABLES.TOKEN}" \
                     -H "X-GitHub-Api-Version: 2022-11-28" \
                     ${GITHUB_VARIABLES.API_URL_FOR_REPO}/releases \
-                    -d '{"tag_name":"v1.0.0","target_commitish":"master","name":"v1.0.0","body":"Description of the release","draft":false,"prerelease":false,"generate_release_notes":false}'
+                    -d '{"tag_name":"v1.0.0","target_commitish":"main","name":"v1.0.0","body":"Description of the release","draft":false,"prerelease":false,"generate_release_notes":false}'
                 `,
             )];
         },
