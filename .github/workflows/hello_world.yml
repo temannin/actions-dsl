@@ -1,3 +1,4 @@
+# THIS FILE WAS AUTO-GENERATED, PLEASE AVOID EDITING THIS FILE DIRECTLY
 name: Hello World
 
 on: 
@@ -9,4 +10,5 @@ jobs:
   hello-world:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "Hello, World!"
+      - run: |
+          echo "Hello, World!"

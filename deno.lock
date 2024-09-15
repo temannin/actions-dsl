@@ -1,5 +1,31 @@
 {
   "version": "3",
+  "packages": {
+    "specifiers": {
+      "jsr:@std/assert": "jsr:@std/assert@1.0.5",
+      "jsr:@std/assert@^1.0.5": "jsr:@std/assert@1.0.5",
+      "jsr:@std/expect": "jsr:@std/expect@1.0.3",
+      "jsr:@std/internal@^1.0.3": "jsr:@std/internal@1.0.3"
+    },
+    "jsr": {
+      "@std/assert@1.0.5": {
+        "integrity": "e37da8e4033490ce613eec4ac1d78dba1faf5b02a3f6c573a28f15365b9b440f",
+        "dependencies": [
+          "jsr:@std/internal@^1.0.3"
+        ]
+      },
+      "@std/expect@1.0.3": {
+        "integrity": "d9cbd03323ef7feafd1e969ed85d5edb04ebbd9937b0fe7a52d5ff53be8e913a",
+        "dependencies": [
+          "jsr:@std/assert@^1.0.5",
+          "jsr:@std/internal@^1.0.3"
+        ]
+      },
+      "@std/internal@1.0.3": {
+        "integrity": "208e9b94a3d5649bd880e9ca38b885ab7651ab5b5303a56ed25de4755fb7b11e"
+      }
+    }
+  },
   "remote": {
     "https://raw.githubusercontent.com/temannin/actions-dsl/main/RunnerTypes.ts": "e8a35dd5973efd584a93d0e2ef2f9ad2a57590a98551b98600d0554c046ace7a",
     "https://raw.githubusercontent.com/temannin/actions-dsl/main/Workflow.ts": "acee57dd95aed727a82115bc2125f195ff81795ffcfa4e6e356acd021102e507",
