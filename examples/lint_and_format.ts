@@ -37,7 +37,7 @@ const runUnitTests: JobConfiguration = {
 };
 
 // combine in workflow
-const workflow = new Workflow("Check Linting and Formatting")
+const workflow = new Workflow("Lint, Format, and Unit Test")
   .on([
     Triggers.PullRequest({
       types: ["synchronize", "opened"],
