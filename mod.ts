@@ -6,7 +6,7 @@ export { RunnerTypes } from "./RunnerTypes.ts";
 
 export * from "./actions/mod.ts";
 
-export { GITHUB_VARIABLES } from "./github/mod.ts";
+export { GITHUB_VARIABLES, GitHubPermissions } from "./github/mod.ts";
 
 export const Actions = {
     "GitHub": {

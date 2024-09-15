@@ -1,6 +1,7 @@
 import { GITHUB_VARIABLES, Run, Triggers, Workflow } from "../mod.ts";
 
 const workflow = new Workflow("Create Release")
+    .allow({ contents: "write" })
     .when([Triggers.Push({ "branches": "main" })])
     .addJob({
         name: "create-tag",

@@ -30,7 +30,7 @@ export class Writer {
         );
         this.append(`name: ${this.workflow.name}`);
         this.writeTriggers();
-        this.append(`jobs:`);
+        this.writePermissions();
         this.writeJobs();
         return this.output;
     }
@@ -44,6 +44,7 @@ export class Writer {
     }
 
     private writeJobs() {
+        this.append(`jobs:`);
         for (let index = 0; index < this.workflow.jobs.length; index++) {
             this.indentLevel = 1;
             const job = this.workflow.jobs[index];
@@ -87,6 +88,22 @@ export class Writer {
                 }
             });
         }
+    }
+
+    private writePermissions() {
+        if (this.workflow.permissions.length === 0) return;
+
+        this.append("permissions:");
+        this.incrementIndent();
+
+        this.workflow.permissions.forEach((permission) => {
+            for (const [key, value] of Object.entries(permission)) {
+                this.append(`${key}: ${value}`);
+            }
+        });
+
+        this.decrementIndent();
+        this.append("");
     }
 
     private writeTriggers() {

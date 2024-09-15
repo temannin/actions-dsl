@@ -1,3 +1,4 @@
+import { Permissions } from "./github/permissions.ts";
 import { RunnerTypes } from "./RunnerTypes.ts";
 import { ITrigger } from "./triggers/ITrigger.ts";
 import { addToArray } from "./utils/helpers.ts";
@@ -62,6 +63,7 @@ export class Workflow {
 
     public jobs: JobStepCollection[] = [];
     public triggers: ITrigger[] = [];
+    public permissions: Permissions[] = [];
 
     constructor(name: string) {
         this.name = name;
@@ -69,6 +71,11 @@ export class Workflow {
 
     public on(trigger: SingularOrArray<ITrigger>): this {
         addToArray(this.triggers, trigger);
+        return this;
+    }
+
+    public allow(permissions: SingularOrArray<Permissions>): this {
+        addToArray(this.permissions, permissions);
         return this;
     }
 
