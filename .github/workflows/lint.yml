@@ -1,5 +1,5 @@
 # THIS FILE WAS AUTO-GENERATED, PLEASE AVOID EDITING THIS FILE DIRECTLY
-name: Check Linting and Formatting
+name: Lint, Format, and Unit Test
 
 on: 
   pull_request:
