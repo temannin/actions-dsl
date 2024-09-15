@@ -4,6 +4,7 @@ import { ITrigger } from "./ITrigger.ts";
 interface PullRequestOptions {
   branches?: string[];
   paths?: string[];
+  "paths-ignore"?: string[];
 }
 
 export const Push = (opts: PullRequestOptions): ITrigger => {

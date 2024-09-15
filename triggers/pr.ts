@@ -78,6 +78,7 @@ export interface PullRequestTriggerOptions {
   types?: PullRequestType[];
   branches?: string | string[];
   paths?: string[];
+  "paths-ignore"?: string[];
 }
 
 /**
@@ -95,7 +96,6 @@ class PULL_REQUEST implements ITrigger {
     writer.incrementIndent();
 
     for (const [key, value] of Object.entries(this.opts)) {
-      console.debug(value);
       writer.append(`${key}: [${value.join(", ")}]`);
     }
   }
