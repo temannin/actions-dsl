@@ -1,9 +1,9 @@
 import { GITHUB_VARIABLES, Run, Triggers, Workflow } from "../mod.ts";
 
-const workflow = new Workflow("Create Release")
+const _workflow = new Workflow("Create Release")
     .allow({ contents: "write" })
     .when([Triggers.Push({ "branches": "main" })])
-    .addJob({
+    .do({
         name: "create-tag",
         configureSteps: () => {
             return [Run(
@@ -20,7 +20,7 @@ const workflow = new Workflow("Create Release")
         },
     });
 
-Deno.writeTextFile(
-    "./.github/workflows/create-release.yml",
-    workflow.compile(),
-);
+// Deno.writeTextFile(
+//     "./.github/workflows/create-release.yml",
+//     workflow.compile(),
+// );

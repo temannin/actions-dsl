@@ -91,12 +91,12 @@ export class Writer {
     }
 
     private writePermissions() {
-        if (this.workflow.permissions.length === 0) return;
+        if (this.workflow.workflowPermissions.length === 0) return;
 
         this.append("permissions:");
         this.incrementIndent();
 
-        this.workflow.permissions.forEach((permission) => {
+        this.workflow.workflowPermissions.forEach((permission) => {
             for (const [key, value] of Object.entries(permission)) {
                 this.append(`${key}: ${value}`);
             }

@@ -63,7 +63,7 @@ export class Workflow {
 
     public jobs: JobStepCollection[] = [];
     public triggers: ITrigger[] = [];
-    public permissions: Permissions[] = [];
+    public workflowPermissions: Permissions[] = [];
 
     constructor(name: string) {
         this.name = name;
@@ -74,13 +74,28 @@ export class Workflow {
         return this;
     }
 
+    public when(trigger: SingularOrArray<ITrigger>): this {
+        return this.on(trigger);
+    }
+
+    /**
+     * Set the permissions for the workflow
+     * @param permissions Object representing the permissions granted to this workflow
+     * @returns Workflow builder
+     */
     public allow(permissions: SingularOrArray<Permissions>): this {
-        addToArray(this.permissions, permissions);
+        addToArray(this.workflowPermissions, permissions);
         return this;
     }
 
-    public when(trigger: ITrigger | ITrigger[]): this {
-        return this.on(trigger);
+    /**
+     * Set the permissions for the workflow
+     * @param permissions Object representing the permissions granted to this workflow
+     * @returns Workflow builder
+     */
+    public permissions(desiredPerms: SingularOrArray<Permissions>): this {
+        this.allow(desiredPerms);
+        return this;
     }
 
     public addJob(
@@ -97,6 +112,12 @@ export class Workflow {
         }
 
         return this;
+    }
+
+    public do(
+        props: JobConfiguration,
+    ): this {
+        return this.addJob(props);
     }
 
     public addJobs(configs: JobConfiguration[]): this {
