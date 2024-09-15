@@ -1,9 +1,9 @@
 {
-  "tasks": {
-    "dev": "deno run -A --watch ./examples/lint_and_format.ts"
-  },
-  "fmt": {
-    "indentWidth": 2,
-    "useTabs": false
-  }
+    "tasks": {
+        "dev": "deno run -A --watch ./examples/lint_and_format.ts"
+    },
+    "fmt": {
+        "indentWidth": 4,
+        "useTabs": false
+    }
 }
