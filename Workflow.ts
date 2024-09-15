@@ -4,7 +4,7 @@ import { Writer } from "./utils/Writer.ts";
 
 export interface JobConfiguration {
   name: string;
-  configureSteps: (steps: JobStepCollection) => void;
+  configureSteps: (steps: JobStepCollection) => void | JobStep[];
   styledName?: string;
 }
 
@@ -36,7 +36,7 @@ export class JobStepCollection {
     return this;
   }
 
-  public getReadOnlySteps() {
+  public getReadOnlySteps(): JobStep[] {
     return JSON.parse(JSON.stringify(this.steps));
   }
 }
@@ -84,7 +84,12 @@ export class Workflow {
   public addJob({ name, configureSteps, styledName }: JobConfiguration): this {
     const collection = new JobStepCollection(name, undefined, styledName);
     this.jobs.push(collection);
-    configureSteps(collection);
+    const steps = configureSteps(collection);
+
+    if (Array.isArray(steps) && collection.getReadOnlySteps().length === 0) {
+      steps.forEach((step) => collection.addStep(step));
+    }
+
     return this;
   }
 

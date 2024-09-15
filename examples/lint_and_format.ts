@@ -7,16 +7,19 @@ import {
   Workflow,
 } from "../mod.ts";
 
+// two different ways to configure steps.
+// 1. return an ordered array of steps
 const lintJob: JobConfiguration = {
   name: "lint",
-  configureSteps: (s) => {
-    s.addStep(Checkout()); // standard git checkout
-    s.addStep(SetupDeno({ "deno-version": "v1.x" })); // setup deno
-    s.addStep(Run("deno lint")); // run lint
-  },
+  configureSteps: () => [
+    Checkout(),
+    SetupDeno(),
+    Run("deno lint"),
+  ],
   styledName: "Check Linting",
 };
 
+// 2. or manually edit the supplied collection; ie: "s"
 const formatJob: JobConfiguration = {
   name: "format",
   configureSteps: (s) => {
@@ -27,6 +30,7 @@ const formatJob: JobConfiguration = {
   styledName: "Check Formatting",
 };
 
+// combine in workflow
 const workflow = new Workflow("Check Linting and Formatting")
   .on([
     Triggers.PullRequest({
