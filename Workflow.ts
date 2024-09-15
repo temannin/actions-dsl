@@ -1,5 +1,7 @@
 import { RunnerTypes } from "./RunnerTypes.ts";
 import { ITrigger } from "./triggers/ITrigger.ts";
+import { addToArray } from "./utils/helpers.ts";
+import { SingularOrArray } from "./utils/SingularOrArray.ts";
 import { Writer } from "./utils/Writer.ts";
 
 export interface JobConfiguration {
@@ -25,14 +27,8 @@ export class JobStepCollection {
     this.runsOn = runsOn;
   }
 
-  public addStep(step: JobStep | JobStep[]): this {
-    if (Array.isArray(step)) {
-      // If step is an array, add each element to steps
-      this.steps.push(...step);
-    } else {
-      // If step is a single JobStep, add it directly
-      this.steps.push(step);
-    }
+  public addStep(step: SingularOrArray<JobStep>): this {
+    addToArray(this.steps, step);
     return this;
   }
 
@@ -71,13 +67,8 @@ export class Workflow {
     this.name = name;
   }
 
-  public on(trigger: ITrigger | ITrigger[]): this {
-    if (Array.isArray(trigger)) {
-      this.triggers = this.triggers.concat(trigger);
-    } else {
-      this.triggers.push(trigger);
-    }
-
+  public on(trigger: SingularOrArray<ITrigger>): this {
+    addToArray(this.triggers, trigger);
     return this;
   }
 
