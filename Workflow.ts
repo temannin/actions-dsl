@@ -81,6 +81,10 @@ export class Workflow {
     return this;
   }
 
+  public when(trigger: ITrigger | ITrigger[]): this {
+    return this.on(trigger);
+  }
+
   public addJob({ name, configureSteps, styledName }: JobConfiguration): this {
     const collection = new JobStepCollection(name, undefined, styledName);
     this.jobs.push(collection);

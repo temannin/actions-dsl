@@ -1,7 +1,7 @@
 import { Run, Triggers, Workflow } from "../mod.ts";
 
 const workflow = new Workflow("Hello World")
-  .on(Triggers.Push({ branches: ["demo/**"] }))
+  .when(Triggers.Push({ branches: ["demo/**"] }))
   .addJob({
     name: "hello-world",
     configureSteps: (s) => {
