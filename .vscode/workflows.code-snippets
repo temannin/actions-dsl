@@ -10,7 +10,7 @@
 		"scope": "typescript",
 		"prefix": "wf",
 		"body": [
-			"import { Workflow } from \"..\/mod.ts\";\r\n\r\nconst workflow = new Workflow(\"$1\")\r\n    .addJob({\r\n        name: \"\",\r\n        configureSteps: () => {\r\n            return [];\r\n        },\r\n    });\r\n\r\nDeno.writeTextFile(\r\n    \".\/.github\/workflows\/${1/[\\s-]/_/g}.yml\",\r\n    workflow.compile(),\r\n);\r\n"
+			"import { Workflow } from \"..\/mod.ts\";\r\n\r\nconst workflow = new Workflow(\"$1\")\r\n    .addJob({\r\n        name: \"\",\r\n        configureSteps: () => {\r\n            return [];\r\n        },\r\n    });\r\n\r\nDeno.writeTextFile(\r\n    \".\/.github\/workflows\/${TM_FILENAME}.yml\",\r\n    workflow.compile(),\r\n);\r\n"
 		]
 	}
 }

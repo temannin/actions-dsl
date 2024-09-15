@@ -1,6 +1,6 @@
 {
     "tasks": {
-        "dev": "deno run -A --watch ./examples/lint_and_format.ts"
+        "dev": "deno run -A --watch ./examples/create-release.ts"
     },
     "fmt": {
         "indentWidth": 4,

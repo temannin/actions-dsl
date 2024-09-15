@@ -18,7 +18,16 @@ export class Writer {
         this.output = this.output + `${this.indent()}${str}\n`;
     }
 
+    public appendMultiple(strs: string[]) {
+        strs.forEach((str) => {
+            this.append(str);
+        });
+    }
+
     public getYaml() {
+        this.append(
+            "# THIS FILE WAS AUTO-GENERATED, PLEASE AVOID EDITING THIS FILE DIRECTLY",
+        );
         this.append(`name: ${this.workflow.name}`);
         this.writeTriggers();
         this.append(`jobs:`);
@@ -51,7 +60,16 @@ export class Writer {
 
             job.getReadOnlySteps().forEach((element: JobStep) => {
                 if (!element.name) {
-                    this.append(`- run: ${element.run}`);
+                    this.append(
+                        `- run: |`,
+                    );
+                    this.incrementIndent();
+                    this.incrementIndent();
+                    this.appendMultiple(
+                        element.run!.trim().replace(/\s{2,}/g, " \\\n").split(
+                            "\n",
+                        ),
+                    );
                 } else {
                     this.append(`- name: ${element.name}`);
                     this.incrementIndent();

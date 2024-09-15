@@ -1,10 +1,11 @@
+import { SingularOrArray } from "../utils/SingularOrArray.ts";
 import { Writer } from "../utils/Writer.ts";
 import { ITrigger } from "./ITrigger.ts";
 
 interface PullRequestOptions {
-    branches?: string[];
-    paths?: string[];
-    "paths-ignore"?: string[];
+    branches?: SingularOrArray<string>;
+    paths?: SingularOrArray<string>;
+    "paths-ignore"?: SingularOrArray<string>;
 }
 
 export const Push = (opts: PullRequestOptions): ITrigger => {
@@ -16,11 +17,15 @@ export const Push = (opts: PullRequestOptions): ITrigger => {
                 writer.incrementIndent();
                 writer.append(`${key}:`);
                 writer.incrementIndent();
+
                 if (Array.isArray(value)) {
                     value.forEach((val) => {
                         writer.append(`- ${val}`);
                     });
+                } else {
+                    writer.append(`- ${value}`);
                 }
+
                 writer.decrementIndent();
                 writer.decrementIndent();
             }

@@ -1,3 +1,5 @@
+// https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/accessing-contextual-information-about-workflow-runs
+
 /**
  * Always set to true.
  */
@@ -34,7 +36,7 @@ export const ACTOR = "${{ github.actor }}";
 export const ACTOR_ID = "${{ github.actor_id }}";
 
 /**
- * Returns the API URL.
+ * Returns the API URL, ie: https://api.github.com
  */
 export const API_URL = "${{ github.api_url }}";
 
@@ -159,6 +161,12 @@ export const SHA = "${{ github.sha }}";
 export const STEP_SUMMARY = "${{ github.step_summary }}";
 
 /**
+ * A token to authenticate on behalf of the GitHub App installed on your repository. This is functionally equivalent to the GITHUB_TOKEN secret. For more information, see "Automatic token authentication."
+Note: This context property is set by the Actions runner, and is only available within the execution steps of a job. Otherwise, the value of this property will be null.
+ */
+export const TOKEN = "${{ github.token }}";
+
+/**
  * The username of the user that initiated the workflow run.
  */
 export const TRIGGERING_ACTOR = "${{ github.triggering_actor }}";
@@ -217,3 +225,13 @@ export const RUNNER_TEMP = "${{ github.runner_temp }}";
  * The path to the directory containing preinstalled tools for GitHub-hosted runners.
  */
 export const RUNNER_TOOL_CACHE = "${{ github.runner_tool_cache }}";
+
+/***********************
+ *
+ * Custom helper variables
+ */
+
+/**
+ * Returns the API URL + your repo's name.
+ */
+export const API_URL_FOR_REPO = `${API_URL}/${REPOSITORY}`;
