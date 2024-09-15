@@ -1,5 +1,7 @@
 # `actions-dsl`
 
+[![Check Linting and Formatting](https://github.com/temannin/actions-dsl/actions/workflows/lint.yml/badge.svg?branch=main&event=push)](https://github.com/temannin/actions-dsl/actions/workflows/lint.yml)
+
 `actions-dsl` is an open-source project that leverages Deno to create a
 Domain-Specific Language (DSL) for GitHub Actions. This DSL aims to simplify and
 enhance the creation, management, and configuration of GitHub Actions workflows.
@@ -92,4 +94,3 @@ contribute:
 
 For questions or support, please open an issue on the
 [GitHub repository](https://github.com/temannin/actions-dsl/issues).
-
