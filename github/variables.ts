@@ -234,4 +234,4 @@ export const RUNNER_TOOL_CACHE = "${{ github.runner_tool_cache }}";
 /**
  * Returns the API URL + your repo's name.
  */
-export const API_URL_FOR_REPO = `${API_URL}/${REPOSITORY}`;
+export const API_URL_FOR_REPO = `${API_URL}/repos/${REPOSITORY}`;

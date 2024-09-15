@@ -16,5 +16,5 @@ jobs:
           -H "Accept: application/vnd.github+json" \
           -H "Authorization: Bearer ${{ github.token }}" \
           -H "X-GitHub-Api-Version: 2022-11-28" \
-          ${{ github.api_url }}/${{ github.repository }}/releases \
+          ${{ github.api_url }}/repos/${{ github.repository }}/releases \
           -d '{"tag_name":"v1.0.0","target_commitish":"main","name":"v1.0.0","body":"Description of the release","draft":false,"prerelease":false,"generate_release_notes":false}'
