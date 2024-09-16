@@ -1,10 +1,13 @@
 {
-  "tasks": {
-    "dev": "deno run -A --watch ./examples/lint_and_format.ts"
-  },
-  "fmt": {
-    "indentWidth": 2,
-    "useTabs": false
-  },
-  "version": "0.0.1"
+    "tasks": {
+        "dev": "deno run -A --watch ./dev.ts"
+    },
+    "fmt": {
+        "indentWidth": 4,
+        "useTabs": false,
+        "singleQuote": false,
+        "semiColons": true,
+        "lineWidth": 80
+    },
+    "version": "0.0.1"
 }
