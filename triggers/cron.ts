@@ -23,8 +23,7 @@ export class CronBuilder implements ITrigger {
         writer.append("schedule:");
         writer.incrementIndent();
 
-        const cronExpression =
-            `${this.minute} ${this.hour} ${this.dayOfMonth} ${this.month} ${this.dayOfWeek}`;
+        const cronExpression = `${this.minute} ${this.hour} ${this.dayOfMonth} ${this.month} ${this.dayOfWeek}`;
 
         writer.append(`${cronExpression}\n`);
     }

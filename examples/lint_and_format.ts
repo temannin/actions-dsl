@@ -1,15 +1,8 @@
-import {
-    Checkout,
-    JobConfiguration,
-    Run,
-    SetupDeno,
-    Triggers,
-    Workflow,
-} from "../mod.ts";
+import { Checkout, JobConfiguration, Run, SetupDeno, Triggers, Workflow } from "../mod.ts";
 
 // two different ways to configure steps.
 // 1. return an ordered array of steps
-const lintJob: JobConfiguration = {
+const checkLintingJob: JobConfiguration = {
     name: "lint",
     configureSteps: () => [
         Checkout(),
@@ -20,7 +13,7 @@ const lintJob: JobConfiguration = {
 };
 
 // 2. or manually edit the supplied collection; ie: "s"
-const formatJob: JobConfiguration = {
+const checkFormatJob: JobConfiguration = {
     name: "format",
     configureSteps: (s) => {
         s.addStep(Checkout());
@@ -30,7 +23,7 @@ const formatJob: JobConfiguration = {
     styledName: "Check Formatting",
 };
 
-const runUnitTests: JobConfiguration = {
+const unitTestJob: JobConfiguration = {
     configureSteps: () => [Checkout(), SetupDeno(), Run("deno test")],
     name: "unit-test",
     styledName: "Unit Tests",
@@ -45,7 +38,7 @@ const workflow = new Workflow("Lint, Format, and Unit Test")
         }),
     ])
     .on([Triggers.Push({ branches: ["main", "master"], paths: ['"**.ts"'] })])
-    .addJobs([lintJob, formatJob, runUnitTests]);
+    .addJobs([checkLintingJob, checkFormatJob, unitTestJob]);
 
 Deno.writeTextFile(
     "./.github/workflows/lint.yml",
