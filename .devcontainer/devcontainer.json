@@ -1,0 +1,6 @@
+{
+  "name": "Deno Dev Container",
+  "build": {
+    "dockerfile": "Dockerfile"
+  }
+}
